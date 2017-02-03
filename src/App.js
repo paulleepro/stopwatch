@@ -8,6 +8,7 @@ type State = {
     hour: number;
     min: number;
     sec: number;
+    ms: number;
   };
   run: number;
 };
@@ -22,6 +23,7 @@ class Stopwatch extends Component {
         hour: 0,
         min: 0,
         sec: 0,
+        ms: 0,
       },
       run: -1,
     };
@@ -31,7 +33,7 @@ class Stopwatch extends Component {
 
   start() {
     if (this.state.run === -1) {
-      let running = setInterval(this.run, 1000);
+      let running = setInterval(this.run, 100);
       this.setState({run: running});
     }
   }
@@ -42,8 +44,12 @@ class Stopwatch extends Component {
   }
 
   run() {
-    let {hour, min, sec} = this.state.timer;
-    sec++;
+    let {hour, min, sec, ms} = this.state.timer;
+    ms++;
+    if (ms > 9) {
+      ms = 0;
+      sec++;
+    }
     if (sec > 59) {
       sec = 0;
       min++;
@@ -57,6 +63,7 @@ class Stopwatch extends Component {
         hour: hour,
         min: min,
         sec: sec,
+        ms: ms,
       },
     });
   }
@@ -71,6 +78,8 @@ class Stopwatch extends Component {
             {(this.state.timer.min < 10) ? ('0' + this.state.timer.min) : (this.state.timer.min)}
             &nbsp;:&nbsp;
             {(this.state.timer.sec < 10) ? ('0' + this.state.timer.sec) : (this.state.timer.sec)}
+            &nbsp;:&nbsp;
+            {this.state.timer.ms}
           </h1>
           <div style={{display: 'flex', justifyContent: 'center'}}>
             {
