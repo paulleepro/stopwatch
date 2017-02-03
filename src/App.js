@@ -68,6 +68,19 @@ class Stopwatch extends Component {
     });
   }
 
+  reset() {
+    let newTimer = {
+      hour: 0,
+      min: 0,
+      sec: 0,
+      ms: 0,
+    };
+    this.stop();
+    this.setState({
+      timer: newTimer,
+    });
+  }
+
   render() {
     return (
       <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -86,7 +99,8 @@ class Stopwatch extends Component {
               (this.state.run !== -1) ?
               (<button type="text" onClick={this.stop}>Stop</button>) :
               (<button type="text" onClick={this.start}>Start</button>)
-            }
+            }&nbsp;
+            <button type="text" onClick={this.reset}>Reset</button>
           </div>
         </div>
       </div>
